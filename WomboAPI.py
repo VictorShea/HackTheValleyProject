@@ -1,3 +1,5 @@
+import sys
+
 import requests
 import json
 import time
@@ -43,8 +45,8 @@ def send_task_to_dream_api(style_id, prompt, target_img_path=None):
             "style": style_id,
             "prompt": prompt,
             "target_image_weight": 0.1,
-            "width": 960,
-            "height": 1560
+            "width": 1920,
+            "height": 1080
         }})
     requests.request(
         "PUT", task_id_url, headers=HEADERS, data=put_payload)
@@ -61,7 +63,7 @@ def send_task_to_dream_api(style_id, prompt, target_img_path=None):
                 "GET", response_json["result"])
             with open("image.jpg", "wb") as image_file:
                 image_file.write(r.content)
-            print("image saved successfully :)")
+            print("image.jpg")
             break
 
         elif state =="failed":
@@ -72,5 +74,5 @@ def send_task_to_dream_api(style_id, prompt, target_img_path=None):
 
     # Step 5) Enjoy your beautiful artwork :3
 
-send_task_to_dream_api(3, "The night sky", target_img_path=None)
+send_task_to_dream_api(3, sys.argv[1], target_img_path=None)
 
